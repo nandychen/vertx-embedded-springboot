@@ -2,6 +2,7 @@ package com.vertx.worker.mvc.dto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.google.gson.Gson;
@@ -15,7 +16,7 @@ public class Book {
     private static final long serialVersionUID = 8203836758273948712L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name = "";

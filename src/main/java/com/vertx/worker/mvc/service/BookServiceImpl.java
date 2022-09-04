@@ -5,6 +5,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.List;
 
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import com.google.gson.Gson;
@@ -65,7 +66,7 @@ public class BookServiceImpl {
         //Book book = bookRepository.findOne(bookId);
 
         // Mybatis
-        Book book =bookDao.selectBookOne(bookId);
+        Book book = bookDao.selectBookOne(bookId);
 
         if (book != null) {
             result.put("statusCode", HttpStatus.OK.value());
@@ -85,10 +86,10 @@ public class BookServiceImpl {
 
         bookRepository.save(chkBook);
 
-        Book changedBook = bookRepository.findOne(chkBook.getId());
+        Optional<Book> changedBook = bookRepository.findById(chkBook.getId());
 
         result.put("statusCode", HttpStatus.OK.value());
-        result.put("data", changedBook.toJson());
+        result.put("data", changedBook.orElse(new Book(new JsonObject().put("id", 0).put("name", "test"))).toJson());
         result.put("message", "update book success");
         return result;
     }
@@ -96,7 +97,7 @@ public class BookServiceImpl {
     public JsonObject delete(Long bookId) {
         JsonObject result = new JsonObject();
 
-        bookRepository.delete(bookId);
+        bookRepository.deleteById(bookId);
 
         result.put("statusCode", HttpStatus.OK.value());
         result.put("message", "delete book success");

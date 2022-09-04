@@ -62,7 +62,7 @@ public class Application {
 
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(new Object[]{Application.class}, args);
+        SpringApplication.run(Application.class);
     }
 
 
